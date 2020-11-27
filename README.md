@@ -30,5 +30,7 @@ Para fins de replicabilidade e transparência eu deixei os hashes dos zips dos d
 
 Os dados brutos podem ser baixados diretamente do [portal da transparência](http://www.portaltransparencia.gov.br/pagina-interna/603519-download-de-dados-auxilio-emergencial).
 
+O banco de dados normalizado com os dados de abril (202004) a agosto (202008) no meu caso ocupa aproximadamente 13GB, criando um índice para o campo nome (`CREATE INDEX auxilio_nome on auxilio (nome);`) o tamanho aumenta para aproximadamente 21GB. Eu recomendo criar o índice depois de normalizar tudo.
+ 
 ## TODO
 - [ ] Comparativo de velocidade usando diferentes tweaks no SQL.

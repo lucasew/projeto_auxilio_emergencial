@@ -1,9 +1,15 @@
+function ltrim(s) { sub(/^[ \t\r\n ]+/, "", s); return s  }
+function rtrim(s) { sub(/[ \t\r\n ]+$/, "", s); return s  }
+function trim(s)  { return rtrim(ltrim(s));  }
+
 BEGIN {
     FS=";"
-    BATCH=64*1024
+    # BATCH=64*1024
+    BATCH=1024*1024
+    # BATCH=2
     ending=""
     print "PRAGMA journal_mode=MEMORY;"
-    print "PRAGMA syncronous=OFF;"
+    # print "PRAGMA syncronous=OFF;"
     print "create table if not exists auxilio ("
         print "mes int not null,"
         print "ibge int not null,"
@@ -31,12 +37,12 @@ NR>1{
         printf $3
     }
     printf ","
-    printf "\"" $7 "\"" # nome
+    printf "\"" trim($7) "\"" # nome
     printf ","
     printf $12 + 0 # parcela
     printf ","
     if (substr($13, 1, 1) != "N") { # obs
-        printf "'" $13 "'"
+        printf "'" trim($13) "'"
     } else {
         printf "''"
     }
@@ -44,6 +50,7 @@ NR>1{
     printf $14 + 0 #valor
     printf ")"
     if ((NR % BATCH) == (BATCH - 1)) {
+        printf "." > "/dev/stderr"
         ending=";commit;\n"
     } else {
         ending=","

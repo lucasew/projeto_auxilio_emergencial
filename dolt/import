@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+
+R="$(dirname -- $0)"
+
+$R/../process_awk/dolt/export_csv "$1" | pv | $R/../process_awk/dolt/csv2sql | dolt sql
+

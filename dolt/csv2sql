@@ -2,4 +2,4 @@
 
 R="$(dirname -- $0)"
 
-awk "$(cat $R/csv2sql.awk)"
+awk "$(cat \"$R/csv2sql.awk\")"

@@ -1,2 +1,2 @@
 #! /usr/bin/env bash
-sqlite3 "$1" -csv 'select * from auxilio'
+sqlite3 "$1" -csv 'select * from auxilio order by nome'

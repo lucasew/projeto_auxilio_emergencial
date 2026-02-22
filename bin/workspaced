@@ -10,21 +10,24 @@ if [[ "$CMD" == "codebase" ]]; then
     if [[ "$SUB" == "lint" ]]; then
         echo "Running lint..."
         if command -v shellcheck &> /dev/null; then
-            find . -name "*.sh" -not -path "./tests/*" -print0 | xargs -0 -r shellcheck
+            # Find all files with shebangs or .sh extension
+            grep -lR "^#!" . | grep -v "^\./.git" | grep -v "^\./tests/output" | xargs -r shellcheck || exit 1
         else
             echo "shellcheck not found"
+            exit 1
         fi
         exit 0
     elif [[ "$SUB" == "format" ]]; then
         echo "Running format..."
         if command -v shfmt &> /dev/null; then
-            find . -name "*.sh" -not -path "./tests/*" -print0 | xargs -0 -r shfmt -w
+            grep -lR "^#!" . | grep -v "^\./.git" | grep -v "^\./tests/output" | xargs -r shfmt -w || exit 1
         else
             echo "shfmt not found"
+            exit 1
         fi
         exit 0
     fi
 fi
 
-echo "workspaced: (placeholder) Executing $CMD $SUB $@"
+echo "workspaced: (placeholder) Executing $CMD $SUB $*"
 exit 0

@@ -3,4 +3,3 @@
 R="$(dirname -- $0)"
 
 "$R/export_csv" "$1" | pv | "$R/csv2sql" | dolt sql
-

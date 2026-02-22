@@ -3,7 +3,7 @@
 ## Tooling
 - `mise` is used for task management and tool versioning.
 - `workspaced` is the designated linter/formatter aggregator.
-  - **Note**: Currently, `bin/workspaced` is a placeholder script. The real tool must be installed or configured in `mise.toml`.
+  - **Note**: `bin/workspaced` is a local implementation that wraps `shellcheck` and `shfmt`. It requires `sqlite` (pinned version) and system dependencies like `zip`/`unzip` (which are typically available in CI).
 
 ## Tasks
 - `mise run lint`: Lints the codebase using `workspaced`.

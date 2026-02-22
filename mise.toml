@@ -1,0 +1,15 @@
+[tools]
+node = "22.11.0"
+shellcheck = "0.10.0"
+shfmt = "3.10.0"
+
+[tasks]
+lint = "workspaced codebase lint"
+fmt = "workspaced codebase format"
+test = "bash tests/run_tests.sh"
+codegen = "echo 'No codegen needed'"
+install = "mise install"
+ci = { depends = ["lint", "test"] }
+
+[env]
+PATH = "{{config_root}}/bin:{{env.PATH}}"

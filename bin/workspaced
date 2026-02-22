@@ -1,0 +1,30 @@
+#!/bin/bash
+# workspaced: Linter/Formatter Aggregator
+
+CMD=$1
+shift
+SUB=$1
+shift
+
+if [[ "$CMD" == "codebase" ]]; then
+    if [[ "$SUB" == "lint" ]]; then
+        echo "Running lint..."
+        if command -v shellcheck &> /dev/null; then
+            find . -name "*.sh" -not -path "./tests/*" -print0 | xargs -0 -r shellcheck
+        else
+            echo "shellcheck not found"
+        fi
+        exit 0
+    elif [[ "$SUB" == "format" ]]; then
+        echo "Running format..."
+        if command -v shfmt &> /dev/null; then
+            find . -name "*.sh" -not -path "./tests/*" -print0 | xargs -0 -r shfmt -w
+        else
+            echo "shfmt not found"
+        fi
+        exit 0
+    fi
+fi
+
+echo "workspaced: (placeholder) Executing $CMD $SUB $@"
+exit 0

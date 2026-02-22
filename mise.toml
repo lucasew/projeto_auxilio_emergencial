@@ -12,4 +12,4 @@ install = "mise install"
 ci = { depends = ["lint", "test"] }
 
 [env]
-PATH = "{{config_root}}/bin:{{env.PATH}}"
+_.path = ["./bin"]

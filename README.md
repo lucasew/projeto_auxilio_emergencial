@@ -18,8 +18,8 @@ A implementação desse pipeline foi descrita com mais detalhes [neste post](htt
   - recebe: caminho para o banco de dados, se o arquivo não existir ele vai ser criado
   - stdin: sql a ser executado
   - stdout: algum resultado que algum sql de repente retorna
-- dbify_all_zips: recebe o nome dos zips usando aquela notação curinga, tipo `caminho/para/pasta/*` e aplica o pipeline em cada zip para um banco sqlite
-  - recebe: pasta com zips a serem processados; caminho onde será salvo o banco de dados
+- dbify_all_zips: recebe o nome dos zips usando aquela notação curinga, tipo `"caminho/para/pasta/*"` e aplica o pipeline em cada zip para um banco sqlite
+  - recebe: pasta com zips a serem processados (deve estar entre aspas para evitar expansão prematura pelo shell); caminho onde será salvo o banco de dados
   - stdin: nada
   - stdout: logs, relatórios, nada machine friendly mesmo :v
   - literalmente é um for que passa em cada zip e roda os outros 3 utilitários acima passando a saída de um como entrada de outro

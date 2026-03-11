@@ -4,9 +4,17 @@ function trim(s)  { return rtrim(ltrim(s));  }
 
 BEGIN {
     FS=";"
-    # BATCH=64*1024
-    BATCH=1024*1024
-    # BATCH=2
+    # Extract constants
+    BATCH_SIZE=1048576 # Evaluated 1024*1024
+
+    # Column mappings
+    COL_MES=1
+    COL_IBGE=3
+    COL_NOME=7
+    COL_PARCELA=12
+    COL_OBS=13
+    COL_VALOR=14
+
     ending=""
     print "PRAGMA journal_mode=MEMORY;"
     # print "PRAGMA syncronous=OFF;"
@@ -24,32 +32,41 @@ BEGIN {
 NR>1{
     printf ending
     gsub("\"", "")
-    if ((NR % BATCH) == 0) {
+    if ((NR % BATCH_SIZE) == 0) {
         print "begin transaction;"
         printf "insert into auxilio (mes, ibge, nome, parcela, obs, valor) values "
     }
+
+    # Extract variables
+    val_mes = $COL_MES
+    val_ibge = $COL_IBGE
+    val_nome = $COL_NOME
+    val_parcela = $COL_PARCELA
+    val_obs = $COL_OBS
+    val_valor = $COL_VALOR
+
     printf("(")
-    printf $1 # mês
+    printf val_mes
     printf ","
-    if ($3 == "") { # ibge
+    if (val_ibge == "") {
         printf 0
     } else {
-        printf $3
+        printf val_ibge
     }
     printf ","
-    printf "\"" trim($7) "\"" # nome
+    printf "\"" trim(val_nome) "\""
     printf ","
-    printf $12 + 0 # parcela
+    printf val_parcela + 0
     printf ","
-    if (substr($13, 1, 1) != "N") { # obs
-        printf "'" trim($13) "'"
+    if (substr(val_obs, 1, 1) != "N") {
+        printf "'" trim(val_obs) "'"
     } else {
         printf "''"
     }
     printf ","
-    printf $14 + 0 #valor
+    printf val_valor + 0
     printf ")"
-    if ((NR % BATCH) == (BATCH - 1)) {
+    if ((NR % BATCH_SIZE) == (BATCH_SIZE - 1)) {
         printf "." > "/dev/stderr"
         ending=";commit;\n"
     } else {

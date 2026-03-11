@@ -4,8 +4,17 @@
 BEGIN {
     INSERT_HEADER="insert into auxilio (id, mes, ibge, nome, parcela, obs, valor) VALUES "
     FS=","
-    BATCH=1024*256
-    # BATCH=5
+    # Extract constants
+    BATCH_SIZE=262144 # Evaluated 1024*256
+
+    # Column mappings
+    COL_MES=1
+    COL_IBGE=2
+    COL_NOME=3
+    COL_PARCELA=4
+    COL_OBS=5
+    COL_VALOR=6
+
     printf INSERT_HEADER
     LINE_PREFIX=""
 }
@@ -19,22 +28,31 @@ END {
 NR>0 {
     printf LINE_PREFIX
     gsub(/"/, "")
+
+    # Extract variables
+    val_mes = $COL_MES
+    val_ibge = $COL_IBGE
+    val_nome = $COL_NOME
+    val_parcela = $COL_PARCELA
+    val_obs = $COL_OBS
+    val_valor = $COL_VALOR
+
     printf "("
     printf NR
     printf ", "
-    printf $1
+    printf val_mes
     printf ", "
-    printf $2
+    printf val_ibge
     printf ", "
-    printf "\"" $3 "\""
+    printf "\"" val_nome "\""
     printf ", "
-    printf $4
+    printf val_parcela
     printf ", "
-    printf "\"" $5 "\""
+    printf "\"" val_obs "\""
     printf ", "
-    printf $6
+    printf val_valor
     printf ")"
-    if ((NR%BATCH)==0) {
+    if ((NR%BATCH_SIZE)==0) {
         LINE_PREFIX=";\n" INSERT_HEADER
     } else {
         LINE_PREFIX=","

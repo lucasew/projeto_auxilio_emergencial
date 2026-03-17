@@ -1,0 +1,11 @@
+[tools]
+"github:lucasew/workspaced" = "0.2.3"
+
+[tasks.lint]
+run = "workspaced codebase lint"
+
+[tasks.fmt]
+run = "workspaced codebase format"
+
+[tasks.test]
+run = "echo 'No tests'"

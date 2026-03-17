@@ -1,0 +1,1 @@
+- 2024-03-17: Fixed SC2086 and SC2048 shellcheck warnings by consistently quoting variables and arguments.

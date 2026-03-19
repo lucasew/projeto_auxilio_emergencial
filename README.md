@@ -26,6 +26,8 @@ A implementação desse pipeline foi descrita com mais detalhes [neste post](htt
 
 Basicamente a tunagem fica no arquivo `sqlify.awk`. As otimizações do SQL, de loop e tudo mais. O resto é só plumbing mesmo.
 
+Você também pode encontrar informações sobre a importação e tratamento de dados no [Dolt](https://github.com/dolthub/dolt) na [documentação do diretório `dolt`](dolt/README.md).
+
 Para fins de replicabilidade e transparência eu deixei os hashes dos zips dos datasets que eu usei.
 
 Os dados brutos podem ser baixados diretamente do [portal da transparência](http://www.portaltransparencia.gov.br/pagina-interna/603519-download-de-dados-auxilio-emergencial).
